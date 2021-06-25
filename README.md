@@ -4,6 +4,8 @@
 
 Cross-platform dotfiles & developer environment for Ubuntu 20.04+, macOS Catalina+ & Windows 10 with WSL2
 
+A fork of the excellent work by [jthegedus](https://github.com/jthegedus/dotfiles)
+
 ![Lint](https://github.com/jthegedus/asdf-firebase/workflows/Lint/badge.svg)
 
 ⚡️ tools for shell superpowers ⚡️<br/>[asdf](https://github.com/asdf-vm/asdf) · [shellcheck](https://github.com/koalaman/shellcheck) · [navi](https://github.com/denisidoro/navi) · [z](https://github.com/rupa/z)
@@ -18,6 +20,20 @@ Cross-platform dotfiles & developer environment for Ubuntu 20.04+, macOS Catalin
 > # link new symlinks
 > bash ./scripts/symlink-dotfiles.bash
 > ```
+
+# Differences in this Fork
+
+1. The recommended location is `~/.dotfiles`
+2. **install** `brew` Linux Homebrew added for more install options
+3. **install** `thefuck` thefuck added for typo correction
+4. **install** `pipx` was added (occurs on 2nd run of `setup-devtools`)
+5. **install** `asdf` default plugins updated for frontend developers
+6. **zsh** `.zshrc` includes exports for `MACOS` `UNIX` `WSL` `WINDOWS`
+7. **zsh** `.zshrc` includes eports for `WSL_VERSION` `WSL_HOST` `WSL_CLIENT` when running in WSL2
+8. **zsh** `.zshrc` sets the `DISPLAY` in WSL2
+9. **zsh** `.zshrc` theme changed to Powerlevel10k (https://github.com/romkatv/powerlevel10k), disabled Starship
+10. **zsh** `.zshrc` [WSL Host Patcher](https://github.com/CzBiX/WSLHostPatcher) runs in WSL2 to fix address binding issues
+11. **zsh** `.aliases` add `open` to launch `explorer.exe` in WSL2
 
 ## Contents
 
@@ -108,38 +124,38 @@ and all system dependencies required by each of the above tools.
 
 1. clone my dotfiles into the `projects` dir
 
-    ```shell
-    cd ~ && git clone https://github.com/jthegedus/dotfiles ~/projects/dotfiles
-    ```
+   ```shell
+   cd ~ && git clone https://github.com/<REPO>/dotfiles ~/.dotfiles
+   ```
 
 2. run the `setup-shell.bash` script. This script is interactive! (`exit` OMZSH shell once it is default. Then restart your shell.)
 
-    ```shell
-    ~/projects/dotfiles/scripts/setup-shell.bash
-    ```
+   ```shell
+   ~/.dotfiles/scripts/setup-shell.bash
+   ```
 
 3. update `config/initial-asdf-plugins.txt` with the desired `asdf` plugins you wish to use. The defaults are listed at the beginning of this section.
 
 4. run the `setup-devtools.bash` script
 
-    ```shell
-    ~/projects/dotfiles/scripts/setup-devtools.bash
-    ```
+   ```shell
+   ~/.dotfiles/scripts/setup-devtools.bash
+   ```
 
 5. restart your shell as required by `asdf`
 
 6. run the `setup-devtools.bash` script again (The script accounts for re-running)
 
-    ```shell
-    ~/projects/dotfiles/scripts/setup-devtools.bash
-    ```
+   ```shell
+   ~/.dotfiles/scripts/setup-devtools.bash
+   ```
 
 ### Automated Cleanup
 
 - run the `cleanup.bash` script
 
 ```shell
-~/projects/dotfiles/scripts/cleanup.bash
+~/.dotfiles/scripts/cleanup.bash
 ```
 
 ### Manual Installation
@@ -151,9 +167,9 @@ and all system dependencies required by each of the above tools.
 Runs this installation script to install my Ubuntu 20.04 application setup:
 
 ```shell
-wget -O - https://raw.github.com/jthegedus/dotfiles/master/scripts/setup-ubuntu.bash | bash
+wget -O - https://raw.github.com/<REPO>/dotfiles/master/scripts/setup-ubuntu.bash | bash
 # or with curl if it is already on your system
-bash -c "$(curl -fsSL https://raw.github.com/jthegedus/dotfiles/master/scripts/setup-ubuntu.bash)"
+bash -c "$(curl -fsSL https://raw.github.com/<REPO>/dotfiles/master/scripts/setup-ubuntu.bash)"
 ```
 
 <details>

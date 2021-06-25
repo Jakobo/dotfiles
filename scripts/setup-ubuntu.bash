@@ -8,6 +8,10 @@ sudo apt install git curl tar apt-transport-https gnome-tweaks -y
 # VSCode
 sudo snap install code --classic
 
+# Pipx
+python3 -m pip install --user pipx
+python3 -m pipx ensurepath
+
 # Gitkraken
 # Fix Gitkraken snap launcher icon
 sudo snap install gitkraken --classic

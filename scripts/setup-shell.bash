@@ -5,15 +5,17 @@ set -eo pipefail
 # shellcheck source=./utils.bash
 source "$(dirname "$0")/utils.bash"
 
-# Homebrew
+# XCode for OSX
 if [ -n "$MACOS" ]; then
-	if is_installed "brew"; then
-		log_success "Homebrew already installed"
-	else
-		xcode-select --install
-		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-		log_success "Brew installed successfully"
-	fi
+	xcode-select --install
+fi
+
+# Homebrew for everyone!
+if is_installed "brew"; then
+	log_success "Homebrew already installed"
+else
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+	log_success "Brew installed successfully"
 fi
 
 # Dependencies

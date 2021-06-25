@@ -1,8 +1,40 @@
 #!/bin/bash
 # shellcheck disable=SC2034
 
+### set our dotfile directory
+SOURCE="$(readlink "$HOME/.zshrc")"
+export DOTFILES="$( dirname $( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd ) )"
+
+### OS variables
+[ "$(uname -s)" = "Darwin" ] && export MACOS=1 && export UNIX=1
+[ "$(uname -s)" = "Linux" ] && export LINUX=1 && export UNIX=1
+uname -s | grep -q "_NT-" && export WINDOWS=1
+grep -q -i "microsoft" /proc/version 2>/dev/null && export WSL=1
+
+if [ -n "$WSL" ]; then
+	### WSL Patch (needed until host binding is fixed)
+	$DOTFILES/bins/wsl-host-patch/WSLHostPatcher.exe | grep -iv "dll" | sed -e '/^/ s/^/🔗  /'
+
+	### Send all XConfig to Windows
+	export WSL_VERSION=$(wsl.exe -l -v | grep -a '[*]' | sed 's/[^0-9]*//g')
+	export WSL_HOST=$(tail -1 /etc/resolv.conf | cut -d' ' -f2)
+	export WSL_CLIENT=$(bash.exe -c "ip addr show eth0 | grep -oP '(?<=inet\s)\d+(.\d+){3}'")
+	export DISPLAY=$WSL_HOST:0
+else
+	### Common Linux Setup
+	export DISPLAY=:0
+fi
+
+# DBUS Information and LibGL
+# export $(dbus-launch)
+export LIBGL_ALWAYS_INDIRECT=1
+
+# Java & Android
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export ANDROID_HOME=$HOME/Android
+
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$JAVA_HOME:$ANDROID_HOME/tools/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -11,7 +43,8 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+# ZSH_THEME="robbyrussell"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -83,7 +116,6 @@ plugins=(
 	golang
 	node
 	npm
-	npx
 	python
 	pip
 	zsh-syntax-highlighting
@@ -172,13 +204,26 @@ source_if_exists "$HOME/.aliases"
 # add_path_to_global_path "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
 # shellcheck disable=SC1090
-[ "$(uname -s)" = "Darwin" ] &&
-	printf "%s\\n" "🦋  Load Navi" &&
-	source <(navi widget zsh)
+# [ "$(uname -s)" = "Darwin" ] &&
+# 	printf "%s\\n" "🦋  Load Navi" &&
+# 	source <(navi widget zsh)
 
 ### https://starship.rs
-printf "%s\\n" "🚀  Load Starship shell prompt"
-eval "$(starship init zsh)"
+# printf "%s\\n" "🚀  Load Starship shell prompt"
+# eval "$(starship init zsh)"
 
 # printf "\\n🏞  Environment Variables: \\n\\n"
 # printenv
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Initialize thefuck
+[[ ! -x thefuck ]] || eval $(thefuck --alias)

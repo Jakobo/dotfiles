@@ -35,3 +35,6 @@
 *.gif binary
 *.ico binary
 *.svg text
+
+# Executables
+*.exe binary

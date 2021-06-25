@@ -58,3 +58,8 @@ alias fpath="print -l $fpath"
 alias getpage="wget --no-clobber --page-requisites --html-extension --convert-links --no-host-directories"
 # file with original filename
 alias get="curl -O -L"
+
+### wsl "open"
+if [ -n "$WSL" ]; then
+  alias open="explorer.exe"
+fi

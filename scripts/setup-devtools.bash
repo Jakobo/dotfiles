@@ -108,4 +108,8 @@ else
 fi
 log_success "Successfully installed Extras"
 
+# pipx - everyone can get it via brew!
+log_info "Installing pipx"
+brew install pipx
+
 log_info "Fin 🏁"
