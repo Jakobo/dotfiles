@@ -111,7 +111,8 @@ fpath=($HOME/.asdf/completions $fpath)
 plugins=(
 	asdf
 	docker
-	# gcloud
+	gcloud
+	thefuck
 	git
 	golang
 	node

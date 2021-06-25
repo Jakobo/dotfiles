@@ -14,7 +14,7 @@ fi
 if is_installed "brew"; then
 	log_success "Homebrew already installed"
 else
-	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 	log_success "Brew installed successfully"
 fi
 
@@ -56,7 +56,7 @@ if [ -d "$HOME/.oh-my-zsh" ]; then
 	log_success "oh-my-zsh already installed"
 else
 	log_info "Installing oh-my-zsh"
-	sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+	sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/HEAD/tools/install.sh)"
 
 	log_info "Installing zsh-syntax-highlighting plugin"
 	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
@@ -97,7 +97,7 @@ if [ -f "${HOME}/z.sh" ]; then
 	log_success "z.sh already installed"
 else
 	log_info "Installing z"
-	wget -P "${HOME}" https://raw.githubusercontent.com/rupa/z/master/z.sh
+	wget -P "${HOME}" https://raw.githubusercontent.com/rupa/z/HEAD/z.sh
 fi
 
 # navi - https://github.com/denisidoro/navi
@@ -120,6 +120,6 @@ log_info "🏁  Fin"
 log_warning "Do not forget to run:"
 log_info "git config --global user.name <your name>"
 log_info "git config --global user.email <your@email.com>"
-log_info "git config --global core.editor <editor of choice>"
-log_info "git config credential.helper store"
+log_info "git config --global core.editor \"code --wait\""
+log_info "git config --global credential.helper store"
 log_info "git config --global credential.helper 'cache --timeout 7200'"
